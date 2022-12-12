@@ -14,17 +14,58 @@
 <container>
     <div>
     <h1>
-        O nama
+        &nbsp O nama
     </h1>
         <br><br>
         <div class="row">
             <div class="col-1">
             </div>
             <div class="col-1">
-        <button type="button" class="btn btn-primary">Primary</button>
+        <a href="https://github.com/KristinaVucina/night-club-rezervacije" target="_blank" type="button"
+           class="btn btn-primary">Link za GitHub</a>
+            </div>
+            <br><br>
+            <div class="row">
+
+            <div class="col-1"></div>
+            <div class="col-1">
+                <a href="https://docs.google.com/document/u/0/d/1cisyedasqv7j1Lbp_lmooxYLxAvYZiwF/edit?dls=true&usp=gmail_attachment_preview" target="_blank" type="button"
+                   class="btn btn-primary">Link za viziju</a>
+            </div>
             </div>
         </div>
         <br>
+        <div class="row">
+        <div class="col-1">
+        </div>
+        <div class="col-3">
+            <h2>O našem projektu</h2>
+            <p>CLUB CLUB CLUB</p>
+        </div>
+        </div>
+        <div class="row">
+        <div class="col-1">
+        </div>
+        <div class="col-3">
+            <h2>Motivacija</h2>
+            <p>nema</p>
+        </div>
+        </div>
+        <div class="row">
+        <div class="col-1">
+        </div>
+        <div class="col-3">
+            <h2>Tehnologije</h2>
+            <ul>
+                <li>HTML</li>
+                <li>CSS</li>
+                <li>Bootstrap</li>
+                <li>PHP</li>
+                <li>Laravel</li>
+                <li>Laragon</li>
+            </ul>
+        </div>
+        </div>
         <div class="row">
         <div class="col-1">
         </div>
