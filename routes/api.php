@@ -22,7 +22,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::apiResource('users', UserController::class);
+// Route::apiResource('users', UserController::class);
 Route::apiResource('clubs', ClubController::class);
 Route::apiResource('events', EventController::class);
 Route::apiResource('reservations', ReservationController::class);

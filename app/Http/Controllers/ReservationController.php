@@ -19,16 +19,34 @@ class ReservationController extends Controller
 
     public function store(Request $request)
     {
-        
+        $validated = $request->validate([
+            'user_id' => ['required', 'exists:events,id'],
+            'event_id' => ['required', 'exists:users,id'],
+            'person_count' => ['required', 'integer', 'min:0'],
+        ]);
+
+        $reservation = Reservation::create($validated);
+
+        return response()->json($reservation);
     }
 
     public function update(Request $request, Reservation $reservation)
     {
+        $validated = $request->validate([
+            'user_id' => ['required', 'exists:events,id'],
+            'event_id' => ['required', 'exists:users,id'],
+            'person_count' => ['required', 'integer', 'min:0'],
+        ]);
+
+        $reservation = Reservation::where('id',$reservation->id)->update($validated);
+
+        return response()->json($reservation);
 
     }
 
-    public function delete(Request $request, Reservation $reservation)
+    public function destroy(Request $request, Reservation $reservation)
     {
-        
+        $reservation->delete();
+        return $reservation;
     }
 }
