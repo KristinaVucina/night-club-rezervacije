@@ -12,6 +12,11 @@ class ClubController extends Controller
         return response()->json(Club::all());
     }
 
+    public function getEvents(Request $request, Club $club)
+    {
+        return response()->json($club->events);
+    }
+
     public function show(Request $request, Club $club)
     {
         return response()->json($club);
@@ -23,12 +28,14 @@ class ClubController extends Controller
             'name' => ['required', 'string'],
             'email' => ['required', 'email', 'unique:clubs,email'],
             'url' => ['nullable', 'url'],
+            'slug' => ['required', 'string', 'unique:clubs,slug'],
+            'image_url' => ['nullable', 'url'],
             'reservations_until' => ['required', 'date_format:H:i'],
             'max_person_count' => ['required', 'integer', 'min:0'],
             'capacity' => ['required', 'integer', 'min:0'],
             'owner_id' => ['required', 'exists:users,id'],
         ]);
-
+        
         $club = Club::create($validated);
 
         return response()->json($club);

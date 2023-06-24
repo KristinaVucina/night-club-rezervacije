@@ -18,9 +18,11 @@ use App\Http\Controllers\UserController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+Route::middleware('auth')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('/clubs/{club}/events', [ClubController::class, 'getEvents']);
 
 // Route::apiResource('users', UserController::class);
 Route::apiResource('clubs', ClubController::class);

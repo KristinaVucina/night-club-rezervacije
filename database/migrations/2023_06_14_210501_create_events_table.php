@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('name');
             $table->string('description')->nullable();
             $table->string('url')->nullable();
+            $table->string('image_url')->nullable();
+            $table->string('slug');
             $table->date('date');
             $table->time('time_start');
             $table->time('time_end');
