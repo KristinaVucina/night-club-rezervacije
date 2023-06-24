@@ -45,9 +45,11 @@ class ClubController extends Controller
     {
         $validated = $request->validate([
             'name' => ['required', 'string'],
-            'email' => ['required', 'email', 'unique:clubs,email'],
+            'email' => ['required', 'email'],
             'url' => ['nullable', 'url'],
-            'reservations_until' => ['required', 'date_format:H:i'],
+            'slug' => ['required', 'string'],
+            'image_url' => ['nullable', 'url'],
+            'reservations_until' => ['required', 'date_format:H:i:s'],
             'max_person_count' => ['required', 'integer', 'min:0'],
             'capacity' => ['required', 'integer', 'min:0'],
             'owner_id' => ['required', 'exists:users,id'],

@@ -23,10 +23,12 @@ class EventController extends Controller
         $validated = $request->validate([
             'name' => ['required', 'string'],
             'description' => ['nullable', 'string'],
+            'image_url' => ['nullable', 'string'],
+            'slug' => ['nullable', 'string'],
             'url' => ['nullable', 'url'],
             'date' => ['required', 'date'],
             'time_start' => ['required', 'date_format:H:i'],
-            'time_end' => ['required', 'date_format:H:i', 'after:time_start'],
+            'time_end' => ['required', 'date_format:H:i'],
             'club_id' => ['required', 'exists:clubs,id'],
         ]);
 
