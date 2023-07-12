@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Event;
-
+use Carbon\Carbon;
 
 class EventController extends Controller
 {
@@ -43,12 +43,14 @@ class EventController extends Controller
             'name' => ['required', 'string'],
             'description' => ['nullable', 'string'],
             'url' => ['nullable', 'url'],
+            'slug' => ['nullable', 'string'],
             'date' => ['required', 'date'],
+            'image_url' => ['nullable', 'string'],
             'time_start' => ['required', 'date_format:H:i'],
-            'time_end' => ['required', 'date_format:H:i', 'after:time_start'],
+            'time_end' => ['required', 'date_format:H:i'],
             'club_id' => ['required', 'exists:clubs,id'],
         ]);
-
+        $validated['date']=Carbon::parse($validated['date'])->format('Y-m-d');
         $event = Event::where('id',$event->id)->update($validated);
 
         return response()->json($event);
@@ -59,5 +61,10 @@ class EventController extends Controller
     {
         $event->delete();
         return $event;
+    }
+
+    public function getReservations(Request $request, Event $event)
+    {
+        return response()->json($event->reservations()->with('user')->get());
     }
 }
