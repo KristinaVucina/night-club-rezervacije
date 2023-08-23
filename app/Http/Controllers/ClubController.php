@@ -9,7 +9,9 @@ class ClubController extends Controller
 {
     public function index(Request $request)
     {
-        return response()->json(Club::all());
+        $search =$request->query('search') ?? '';
+        $clubs = Club::where('name','like','%'.$search.'%')->get();
+        return response()->json($clubs);
     }
 
     public function getEvents(Request $request, Club $club)
