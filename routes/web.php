@@ -22,7 +22,8 @@ Route::get('/o-nama', function () {
     return view('o-nama');
 });
 
-Auth::routes();
+Route::post('login', [App\Http\Controllers\Auth\LoginController::class,'login'])->name('login');
+Route::post('register', [App\Http\Controllers\Auth\RegisterController::class,'register'])->name('register');
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 

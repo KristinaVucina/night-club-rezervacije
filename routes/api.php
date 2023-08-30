@@ -6,6 +6,7 @@ use App\Http\Controllers\ClubController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\RoleController;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
@@ -20,9 +21,12 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Route::get('/user', function (Request $request) {
-    return User::find(1);
+Route::middleware('auth:web')->get('/user', function (Request $request) {
+    return response()->json(Auth::user()->load('roles'));
 });
+
+Route::post('/users/{user}/sync_roles', [UserController::class, 'syncRoles']);
+
 
 Route::get('/clubs/{club}/events', [ClubController::class, 'getEvents']);
 Route::get('/events/{event}/reservations', [EventController::class, 'getReservations']);
@@ -32,4 +36,6 @@ Route::get('/events/{event}/reservations', [EventController::class, 'getReservat
 Route::apiResource('clubs', ClubController::class);
 Route::apiResource('events', EventController::class);
 Route::apiResource('reservations', ReservationController::class);
+Route::apiResource('roles', RoleController::class);
+Route::apiResource('users', UserController::class);
 
