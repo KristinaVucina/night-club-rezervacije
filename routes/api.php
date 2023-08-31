@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\Auth;
 */
 
 Route::middleware('auth:web')->get('/user', function (Request $request) {
-    return response()->json(Auth::user()->load('roles'));
+    return response()->json(Auth::user()->load(['reservations.event.club','roles']));
 });
 
 Route::post('/users/{user}/sync_roles', [UserController::class, 'syncRoles']);
