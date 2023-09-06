@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Route::middleware('auth:web')->get('/user', function (Request $request) {
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return response()->json(Auth::user()->load(['reservations.event.club','roles']));
 });
 
@@ -29,6 +29,8 @@ Route::post('/users/{user}/sync_roles', [UserController::class, 'syncRoles']);
 
 
 Route::get('/clubs/{club}/events', [ClubController::class, 'getEvents']);
+// Route::post('/clubs/{club}', [ClubController::class, 'update']);
+
 Route::get('/events/{event}/reservations', [EventController::class, 'getReservations']);
 
 

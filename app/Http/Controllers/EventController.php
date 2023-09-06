@@ -23,7 +23,7 @@ class EventController extends Controller
         $validated = $request->validate([
             'name' => ['required', 'string'],
             'description' => ['nullable', 'string'],
-            'image_url' => ['nullable', 'string'],
+            'image' => ['nullable', 'file'],
             'slug' => ['nullable', 'string'],
             'url' => ['nullable', 'url'],
             'date' => ['required', 'date'],
@@ -31,6 +31,12 @@ class EventController extends Controller
             'time_end' => ['required', 'date_format:H:i'],
             'club_id' => ['required', 'exists:clubs,id'],
         ]);
+
+        if($validated['image'])
+        $validated['image_url'] = Storage::url($validated['image']->store('clubs', 'public'));
+
+        
+        unset($validated['image']);
 
         $event = Event::create($validated);
 
@@ -45,11 +51,17 @@ class EventController extends Controller
             'url' => ['nullable', 'url'],
             'slug' => ['nullable', 'string'],
             'date' => ['required', 'date'],
-            'image_url' => ['nullable', 'string'],
+            'image' => ['nullable', 'file'],
             'time_start' => ['required', 'date_format:H:i'],
             'time_end' => ['required', 'date_format:H:i'],
             'club_id' => ['required', 'exists:clubs,id'],
         ]);
+
+        if($validated['image'])
+        $validated['image_url'] = Storage::url($validated['image']->store('clubs', 'public'));
+
+        unset($validated['image']);
+
         $validated['date']=Carbon::parse($validated['date'])->format('Y-m-d');
         $event = Event::where('id',$event->id)->update($validated);
 

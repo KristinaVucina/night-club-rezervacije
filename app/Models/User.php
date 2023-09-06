@@ -56,4 +56,20 @@ class User extends Authenticatable
     {
         return $this->hasMany(Reservation::class);
     }
+
+    public function assignRole($role)
+    {
+        $role = Role::where('name',$role)->first();
+        return $this->roles()->attach([$role->id]);
+    }
+
+    public function hasRole($role)
+    {
+        return $this->roles()->where('name',$role)->first() ? true : false;
+    }
+
+    public function hasAnyRole($roles)
+    {
+        return $this->roles()->whereIn('name',$roles)->first() ? true : false;
+    }
 }

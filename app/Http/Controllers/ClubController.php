@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Club;
+use Illuminate\Support\Facades\Storage;
 
 class ClubController extends Controller
 {
@@ -16,7 +17,7 @@ class ClubController extends Controller
 
     public function getEvents(Request $request, Club $club)
     {
-        return response()->json($club->events);
+        return response()->json($club->events()->with('club')->get());
     }
 
     public function show(Request $request, Club $club)
@@ -31,12 +32,17 @@ class ClubController extends Controller
             'email' => ['required', 'email', 'unique:clubs,email'],
             'url' => ['nullable', 'url'],
             'slug' => ['required', 'string', 'unique:clubs,slug'],
-            'image_url' => ['nullable', 'url'],
+            'image' => ['nullable', 'file'],
             'reservations_until' => ['required', 'date_format:H:i'],
             'max_person_count' => ['required', 'integer', 'min:0'],
             'capacity' => ['required', 'integer', 'min:0'],
             'owner_id' => ['required', 'exists:users,id'],
         ]);
+        
+        if($validated['image'])
+            $validated['image_url'] = Storage::url($validated['image']->store('clubs', 'public'));
+
+        unset($validated['image']);
         
         $club = Club::create($validated);
 
@@ -50,17 +56,21 @@ class ClubController extends Controller
             'email' => ['required', 'email'],
             'url' => ['nullable', 'url'],
             'slug' => ['required', 'string'],
-            'image_url' => ['nullable', 'url'],
+            'image' => ['nullable', 'file'],
             'reservations_until' => ['required', 'date_format:H:i:s'],
             'max_person_count' => ['required', 'integer', 'min:0'],
             'capacity' => ['required', 'integer', 'min:0'],
             'owner_id' => ['required', 'exists:users,id'],
         ]);
 
+        if($validated['image'])
+            $validated['image_url'] = Storage::url($validated['image']->store('clubs', 'public'));
+
+        unset($validated['image']);
+
         $club = Club::where('id',$club->id)->update($validated);
 
         return response()->json($club);
-
     }
 
     public function destroy(Request $request, Club $club)
@@ -68,4 +78,5 @@ class ClubController extends Controller
         $club->delete();
         return $club;
     }
+
 }
